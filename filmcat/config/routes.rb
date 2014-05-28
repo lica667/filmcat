@@ -1,4 +1,7 @@
 Filmcat::Application.routes.draw do
+  root to: "users#index"
+  resources :users
+  get '/new' => 'users#new'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
