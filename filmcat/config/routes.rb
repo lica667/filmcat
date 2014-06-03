@@ -5,7 +5,7 @@ Filmcat::Application.routes.draw do
   resources :users
 
   get '/new' => 'users#new'
-  get 'users/show', as: 'user_root'
+  #get 'users/show', as: 'user_root'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
