@@ -11,7 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140602120009) do
+ActiveRecord::Schema.define(version: 20140606205447) do
+
+  create_table "comments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "film_id"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "film_joins", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "film_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "films", force: true do |t|
+    t.string   "description"
+    t.string   "url_img"
+    t.string   "url_video"
+    t.datetime "release_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "rating"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -27,6 +53,10 @@ ActiveRecord::Schema.define(version: 20140602120009) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password"
+    t.string   "username"
+    t.string   "nickname"
+    t.string   "provider"
+    t.string   "url"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

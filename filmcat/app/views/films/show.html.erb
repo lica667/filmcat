@@ -1,0 +1,22 @@
+<%= @film.name %><br/>
+<%= image_tag(@film.url_img,  height: '542', width: '360', alt: '') %><br/>
+<%= image_submit_tag('http://media.karaspartyideas.com/media/plugins/floating-social-media-links/img/like.png', controller: 'films',action: 'like',height: '20', width: '50', alt: 'Like') %>
+<%= form_for @film, :url => films_like_path, :action => 'like' do%>
+<%= image_submit_tag('http://media.karaspartyideas.com/media/plugins/floating-social-media-links/img/like.png', controller: 'films',action: 'like',height: '20', width: '50', :alt => 'Like') %>
+<% end %>
+<%= @film.rating %><br/>
+
+<p><%= link_to 'All Films', films_path %></p>
+<%= @film.release_date %><br/>
+<%= @film.description %><br/>
+<p>Comments</p>
+<% @film.comments.each do |comment| %>
+<%= comment.text %>
+<%= comment.created_at %>
+<%= comment.user.email %><br/>
+<% end %>
+<%= simple_form_for @comment, :url => comments_path do |f| %>
+<%= f.input :text, label: 'Comment' %><br/>
+<%= f.input :film_id,:as => :hidden, input_html: {value: @film.id} %>
+<%= f.button :submit %>
+<% end %>

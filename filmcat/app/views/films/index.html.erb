@@ -1,0 +1,6 @@
+<h1>Films#index</h1>
+<% @films.each do |film| %>
+<p><%= link_to film.name, film_path(film) %></p><br/>
+<%= image_tag(film.url_img, height: '271', width: '180', alt: '') %>
+<% end %>
+

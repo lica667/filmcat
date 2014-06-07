@@ -1,10 +1,22 @@
 Filmcat::Application.routes.draw do
 
+  #Authproviders::Application.routes.draw do
+  #  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  #  resources :users, :only => [:index, :destroy]
+  # root :to => 'users#index'
+  #end
+
+  get "omniauth_callbacks/facebook"
+  get "omniauth_callbacks/vkontakte"
+  get "comments/new"
+  get "films/index"
   devise_for :users
-  root 'users#index'
-  resources :users
+  #root 'films#index'
+  resources :users, :films, :comments
 
   get '/new' => 'users#new'
+  get 'films/like' => 'films#show'
+  post 'films/like' => 'films#like'
   #get 'users/show', as: 'user_root'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -62,3 +74,4 @@ Filmcat::Application.routes.draw do
   #     resources :products
   #   end
 end
+
