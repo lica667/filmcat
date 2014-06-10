@@ -18,32 +18,31 @@
     = javascript_include_tag "application"
 
 
- .navbar.navbar-fixed-top
+  %body
+    .navbar.navbar-fixed-top
       .navbar-inner
         .container
           %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand(href="#") Authproviders
+          %a.brand(href=films_path) Filmcat
           .container.nav-collapse
             %ul.nav
-              - if user_signed_in?
-                %li= link_to "#{current_user.username} (#{current_user.provider})", current_user.url
-                %li= link_to "Sign out", destroy_user_session_path, :method => :delete
+              %li= link_to "Users", users_path
+
     .container
-      .content
-        .row
-          .span9
-            = yield
-          .span3
-            .well.sidebar-nav
-              %h3 Providers
-              %ul.nav.nav-list
-                - if !user_signed_in?
-                  %li= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook)
-                  %li= link_to "Sign in with Vkontakte", user_omniauth_authorize_path(:vkontakte)
+
+      .row
+        .span9
+          = bootstrap_flash
+          = yield
+        .span3
+          .well.sidebar-nav
+            //%h3 Sidebar
+            //%ul.nav.nav-list
+            //  %li.nav-header Sidebar
+            //  %li= link_to "Link 1", "/path1"
     
       %footer
         %p &copy; Company 2014
- = javascript_include_tag "application"
