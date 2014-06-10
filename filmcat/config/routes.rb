@@ -1,10 +1,10 @@
 Filmcat::Application.routes.draw do
 
-  
+
   #devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   resources :users, :only => [:index, :destroy]
   #root :to => 'users#index'
-  
+
 
   get "omniauth_callbacks/facebook"
   get "omniauth_callbacks/vkontakte"
@@ -15,7 +15,7 @@ Filmcat::Application.routes.draw do
   resources :users, :films, :comments
 
   get '/new' => 'users#new'
-  get 'films/like' => 'films#show'
+  resources :films, only: :show
   post 'films/like' => 'films#like'
   #get 'users/show', as: 'user_root'
 

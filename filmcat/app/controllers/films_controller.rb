@@ -12,6 +12,6 @@ class FilmsController < ApplicationController
   	@film = Film.find(params[:id])
   	@film.rating += 1
   	@film.save
-  	redirect_to show_path
+  	redirect_to film_path(@film)
   end
 end
