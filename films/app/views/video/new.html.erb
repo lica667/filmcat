@@ -1,0 +1,20 @@
+<h1>Video#new</h1>
+<p>Find me in app/views/video/new.html.erb</p>
+<%= form_for @video, url: video_index_path(@video) do |f| %>
+  <div class="form-group">
+    Name <br/> <%= f.text_field :name, placeholder: "Name", class: "form-control" %><br/>    
+  </div>
+  <div class="form-group">
+    Description <br/> <%= f.text_area :description, placeholder: "Description", class: "form-control" %><br/> 
+  </div>
+  <div class="form-group">
+    Picture <br/> <%= f.text_field :url_img, placeholder: "url_image", class: "form-control" %><br/> 
+  </div>
+  <div class="form-group">
+    Video <br/> <%= f.text_field :url_video, placeholder: "url_video", class: "form-control" %><br/> 
+  </div>
+  <div class="form-group">
+    Release date<br/> <%= f.text_field :release_date, placeholder: "release_date", class: "form-control" %><br/> 
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+<% end %>

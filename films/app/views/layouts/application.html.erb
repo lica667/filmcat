@@ -46,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Films</a>
+          <%= link_to('Films', root_path, class: "brand")%>
           <div class="container nav-collapse">
             <ul class="nav">
               <% if current_user %>
@@ -54,6 +54,11 @@
                 <li>
                   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
                 </li>
+                <% if current_user.email == "admin@asd.com" %>
+                <li>
+                  <%= link_to('New video', new_video_path) %>
+                </li>
+                <% end %>
               <% else %>
                 <li>
                   <%= link_to('Register', new_user_registration_path)  %>

@@ -1,0 +1,20 @@
+<%= @film.name %><br/>
+<%= image_tag(@film.url_img,  height: '542', width: '360', alt: '') %><br/>
+
+Rating<%= @film.rating %><br/>
+
+<p><%= link_to 'All Films', root_path %></p>
+<%= @film.release_date %><br/>
+<%= @film.description %><br/>
+<p>Comments</p>
+<% @film.comments.each do |comment| %>
+<%= comment.text %>
+<%= comment.created_at %>
+<%= comment.user.email %><br/>
+<% end %>
+
+<%= form_for @comment, :url => comment_index_path do |f| %>
+<%= f.text_field :text, class: "form-control", placeholder: 'Comment' %><br/>
+<%= f.hidden_field :video_id, value: @film.id %>
+<%= f.button :submit %>
+<% end %>
