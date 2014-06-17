@@ -1,8 +1,7 @@
 <div class="col-xs-6 col-md-4">
 	<%= image_tag(@film.url_img,  height: '542', width: '360', alt: '') %><br/>
 
-	<%= form_for @film, :url => video_like_path do |f|%>
-	<%= f.hidden_field :video_id, value: @film.id %>
+	<%= form_for @film, :url => like_video_path(@film), :method => :post do |f|%>
 	<%= image_submit_tag('http://www.schneiderpr.com/blog/wp-content/uploads/2012/04/like-button.png', height: '20', width: '50', :alt => 'Like') %>
 	<% end %>
 

@@ -5,6 +5,7 @@ class VideoController < ApplicationController
 
   def create
   	@video = Video.new(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date]))
+    @video.rating = 0
   	@video.save
   	redirect_to root_path
   end
@@ -27,7 +28,9 @@ class VideoController < ApplicationController
   end
 
   def update
-    @video.save
+    @video = Video.find(params[:id])
+    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date]))
+    redirect_to video_path(@video)
   end
 
   def edit
@@ -35,7 +38,7 @@ class VideoController < ApplicationController
   end
 
   def like
-    @film = Video.find(params.require(:film).permit[:id])
+    @film = Video.find(params[:id])
     @film.rating += 1
     @film.save
     redirect_to video_path(@film.id)
