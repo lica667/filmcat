@@ -8,7 +8,11 @@
 
 	Rating <%= @film.rating %><br/>
 	<%= link_to 'All Films', root_path %>
-	
+	<% if current_user.email == "admin@asd.com" %>
+		<%= link_to 'Delete', video_path, :method => :delete %>
+		<%= link_to 'Edit', edit_video_path %>
+	<% end %>
+
 	<%= form_for @video_join, :url => video_favorite_path do |f| %>	
 	<% if @video_join.favorite == true %>
 		<%= f.hidden_field :video_id, value: @film.id %>
@@ -23,8 +27,8 @@
 </div>
 
 <div class="col-xs-12 col-md-8">
-	<%= @film.name %><br/>
-	<%= @film.release_date %><br/>
+	Name: <%= @film.name %><br/>
+	Release: <%= @film.release_date %><br/>
 	<%= @film.description %><br/>
 	
   <iframe width="560" height="315" src="<%= @film.url_video %>" frameborder="0" allowfullscreen></iframe>

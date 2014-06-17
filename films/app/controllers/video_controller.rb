@@ -14,21 +14,43 @@ class VideoController < ApplicationController
   	@comment = Comment.new()
     @video_join = VideoJoin.where(user_id: current_user.id, video_id: params[:id]).first    
     if @video_join.nil?
-      @video_join = VideoJoin.new 
+      @video_join = VideoJoin.new
     else
       @video_join.favorite = true
     end
   end
 
+  def destroy
+    @video = Video.find(params[:id])
+    @video.destroy
+    redirect_to root_path
+  end
+
+  def update
+    @video.save
+  end
+
+  def edit
+    @video = Video.find(params[:id])
+  end
+
   def like
-    @film = Film.find(params.require(:film).permit[:id])
+    @film = Video.find(params.require(:film).permit[:id])
     @film.rating += 1
     @film.save
     redirect_to video_path(@film.id)
   end
 
   def favorite
-    @film_join = VideoJoin.create(params.require(:video_join).permit([:user_id, :video_id]))
+    #@video_join.favorite.nil?
+       @film_join = VideoJoin.create(params.require(:video_join).permit([:user_id, :video_id]))
+       #@film_join.favorite = true
+       #@film_join.save
+    #end
     redirect_to video_path(@film_join.video_id)
+  end
+
+  def watched
+    @videos = current_user.videos
   end
 end

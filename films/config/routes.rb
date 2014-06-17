@@ -4,6 +4,7 @@ Films::Application.routes.draw do
   get "video/create"
   post 'video/like' => 'video#like'
   post 'video/favorite' => 'video#favorite'
+  get 'video/watched' => 'video#watched'
   devise_for :users
   get "home/index"
   root to: "home#index"
