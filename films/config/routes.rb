@@ -2,8 +2,8 @@ Films::Application.routes.draw do
   get "comment/create"
   get "video/new"
   get "video/create"
-  post 'video/favorite' => 'videos#favorite'
-  get 'video/watched' => 'videos#watched'
+  post 'video/favorite' => 'video#favorite'
+  get 'video/watched' => 'video#watched'
   devise_for :users
   get "home/index"
   root to: "home#index"
