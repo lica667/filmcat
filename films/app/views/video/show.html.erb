@@ -1,7 +1,25 @@
 <div class="col-xs-6 col-md-4">
 	<%= image_tag(@film.url_img,  height: '542', width: '360', alt: '') %><br/>
-	Rating<%= @film.rating %><br/>
+
+	<%= form_for @film, :url => video_like_path do |f|%>
+	<%= f.hidden_field :video_id, value: @film.id %>
+	<%= image_submit_tag('http://www.schneiderpr.com/blog/wp-content/uploads/2012/04/like-button.png', height: '20', width: '50', :alt => 'Like') %>
+	<% end %>
+
+	Rating <%= @film.rating %><br/>
 	<%= link_to 'All Films', root_path %>
+	
+	<%= form_for @video_join, :url => video_favorite_path do |f| %>	
+	<% if @video_join.favorite == true %>
+		<%= f.hidden_field :video_id, value: @film.id %>
+		<%= f.hidden_field :user_id, value: current_user.id %>
+		<%= image_submit_tag('http://b.dryicons.com/images/icon_sets/colorful_stickers_part_2_icons_set/png/256x256/favorite.png', height: '20', width: '50', :alt => 'Like') %>
+	<% else %>
+		<%= f.hidden_field :video_id, value: @film.id %>
+		<%= f.hidden_field :user_id, value: current_user.id %>
+		<%= image_submit_tag('http://icongal.com/gallery/image/99866/bookmark_favorite_star_badge.png', height: '20', width: '50', :alt => 'Like') %>
+	<% end %>
+	<% end %>
 </div>
 
 <div class="col-xs-12 col-md-8">
