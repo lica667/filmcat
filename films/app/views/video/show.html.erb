@@ -4,8 +4,8 @@
 	<%= form_for @film, :url => like_video_path(@film), :method => :post do |f|%>
 	<%= image_submit_tag('http://www.schneiderpr.com/blog/wp-content/uploads/2012/04/like-button.png', height: '20', width: '50', :alt => 'Like') %>
 	<% end %>
-
 	Rating <%= @film.rating %><br/>
+
 	<%= link_to 'All Films', root_path %>
 	<% if current_user.email == "admin@asd.com" %>
 		<%= link_to 'Delete', video_path, :method => :delete %>
@@ -27,6 +27,8 @@
 
 <div class="col-xs-12 col-md-8">
 	Name: <%= @film.name %><br/>
+	Genre: <% @genres.each do |genre| %>
+		<%= genre.genre %><% end %><br/>
 	Release: <%= @film.release_date %><br/>
 	<%= @film.description %><br/>
 	

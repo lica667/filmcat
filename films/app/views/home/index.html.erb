@@ -1,5 +1,20 @@
 <h1>Home#index</h1>
+<div class="col-md-12">
+Sort:
+  <div class="btn-group">
+      <button class="btn btn-default dropdown-toggle" name="order_by" data-toggle="dropdown"><%= @param %><span class="caret"></span></button>
+      <ul class="dropdown-menu">
+          <li><%= link_to 'Name', name_home_path(@videos) %></li>
+          <li><%= link_to 'Rating', rating_home_path(@videos) %></li>
+          <li><%= link_to 'Release Date', release_date_home_path(@videos) %></li>          
+      </ul>
+  </div>
+</div>
+
+
 <% @videos.each do |video| %>
-<%= link_to video.name, video_path(video) %><br/>
-<%= image_tag(video.url_img, height: '271', width: '180', alt: '', class: "img-rounded") %><br/>
+	<div class="span4">
+		<%= link_to video.name, video_path(video) %><br/>
+		<%= image_tag(video.url_img, height: '271', width: '180', alt: '', class: "img-rounded") %><br/><br/>
+	</div>
 <% end %>

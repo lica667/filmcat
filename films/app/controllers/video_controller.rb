@@ -1,11 +1,16 @@
 class VideoController < ApplicationController
   def new
   	@video = Video.new()
+    @genres = Genre.all.order(:genre)
+    @genre_video = GenreVideo.new
   end
 
   def create
   	@video = Video.new(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date]))
     @video.rating = 0
+    params.require(:genre).permit(:id).each do |genre|
+      GenreVideo.create(:genre_id => genre, :video_id => @video.id)
+    end
   	@video.save
   	redirect_to root_path
   end
@@ -13,6 +18,7 @@ class VideoController < ApplicationController
   def show
   	@film = Video.find(params[:id])
   	@comment = Comment.new()
+    @genres = @film.genres
     @video_join = VideoJoin.where(user_id: current_user.id, video_id: params[:id]).first    
     if @video_join.nil?
       @video_join = VideoJoin.new
@@ -30,11 +36,22 @@ class VideoController < ApplicationController
   def update
     @video = Video.find(params[:id])
     @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date]))
+    #params.require(:genre).permit(:id).each do |genre|
+    #  @genre_video = GenreVideo.new()
+    #  @genre_video[:genre_id] = genre
+    #  @genre_video[:video_id] = @video.id
+    #  @genre_video.save
+    #end
+    params.require(:genre).permit(:id).each do |id|
+      GenreVideo.create(:genre_id => id, :video_id => @video.id)
+    end
     redirect_to video_path(@video)
   end
 
   def edit
     @video = Video.find(params[:id])
+    @genres = Genre.all.order(:genre)
+    @genre_video = GenreVideo.new
   end
 
   def like
@@ -45,15 +62,17 @@ class VideoController < ApplicationController
   end
 
   def favorite
-    #@video_join.favorite.nil?
-       @film_join = VideoJoin.create(params.require(:video_join).permit([:user_id, :video_id]))
-       #@film_join.favorite = true
-       #@film_join.save
-    #end
+    @film_join = VideoJoin.create(params.require(:video_join).permit([:user_id, :video_id]))
     redirect_to video_path(@film_join.video_id)
   end
 
   def watched
     @videos = current_user.videos
   end
+
+  def genre
+
+  end
+
+
 end

@@ -13,6 +13,15 @@ Films::Application.routes.draw do
       post :like
     end
   end
+
+  resources :home do
+    member do
+      post :name
+      post :rating
+      post :release_date
+      get :index
+    end
+  end
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
