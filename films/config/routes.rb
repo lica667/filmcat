@@ -2,7 +2,6 @@ Films::Application.routes.draw do
   get "comment/create"
   get "video/new"
   get "video/create"
-  post 'video/favorite' => 'video#favorite'
   get 'video/watched' => 'video#watched'
   devise_for :users
   get "home/index"
@@ -11,17 +10,12 @@ Films::Application.routes.draw do
   resources :video do
     member do
       post :like
+      post :favorite
+      get :genre
     end
   end
 
-  resources :home do
-    member do
-      post :name
-      post :rating
-      post :release_date
-      get :index
-    end
-  end
+
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   def index  
   	 @videos = Video.all
+     @genres = Genre.all.order(:genre)
   end
 
   def name

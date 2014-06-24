@@ -1,5 +1,7 @@
 <h1>Watched Films</h1>
 <% @videos.each do |video| %>
+<div class="span4">
 <%= link_to video.name, video_path(video) %><br/>
 <%= image_tag(video.url_img, height: '271', width: '180', alt: '', class: "img-rounded") %><br/>
+</div>
 <% end %>

@@ -12,7 +12,7 @@
 		<%= link_to 'Edit', edit_video_path %>
 	<% end %>
 
-	<%= form_for @video_join, :url => video_favorite_path do |f| %>	
+	<%= form_for @video_join, :url => favorite_video_path do |f| %>	
 	<% if @video_join.favorite == true %>
 		<%= f.hidden_field :video_id, value: @film.id %>
 		<%= f.hidden_field :user_id, value: current_user.id %>
@@ -27,7 +27,7 @@
 
 <div class="col-xs-12 col-md-8">
 	Name: <%= @film.name %><br/>
-	Genre: <% @genres.each do |genre| %>
+	Genre: <% @video_genre.each do |genre| %>
 		<%= genre.genre %><% end %><br/>
 	Release: <%= @film.release_date %><br/>
 	<%= @film.description %><br/>

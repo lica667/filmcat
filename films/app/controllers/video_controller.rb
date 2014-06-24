@@ -18,13 +18,14 @@ class VideoController < ApplicationController
   def show
   	@film = Video.find(params[:id])
   	@comment = Comment.new()
-    @genres = @film.genres
+    @video_genre = @film.genres
     @video_join = VideoJoin.where(user_id: current_user.id, video_id: params[:id]).first    
     if @video_join.nil?
       @video_join = VideoJoin.new
     else
       @video_join.favorite = true
     end
+    @genres = Genre.all.order(:genre)
   end
 
   def destroy
@@ -68,10 +69,13 @@ class VideoController < ApplicationController
 
   def watched
     @videos = current_user.videos
+    @genres = Genre.all.order(:genre)
   end
 
   def genre
-
+    @genre = Genre.find(params[:id])
+    @videos = @genre.videos.all
+    @genres = Genre.all.order(:genre)
   end
 
 
