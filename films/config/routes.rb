@@ -12,6 +12,7 @@ Films::Application.routes.draw do
       post :like
       post :favorite
       get :genre
+      get :sort
     end
   end
 

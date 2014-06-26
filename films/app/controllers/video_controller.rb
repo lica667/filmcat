@@ -78,5 +78,14 @@ class VideoController < ApplicationController
     @genres = Genre.all.order(:genre)
   end
 
+  def sort
+
+    @videos = Video.all.order(:name) if params[:id] == 'name'
+    @videos = Video.all.order(:rating).reverse if params[:id] == 'rating'
+    @videos = Video.all.order(:release_date).reverse if params[:id] == 'release_date'
+
+    @genres = Genre.all.order(:genre)
+  end
+
 
 end
