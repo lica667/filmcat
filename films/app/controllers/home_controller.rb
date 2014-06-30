@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   def index  
-  	 @videos = Video.all
+  	 @videos = Video.all.order(:name)
+     #@videos = Video.all.order(:rating).reverse if params[:id] == 'rating'
      @genres = Genre.all.order(:genre)
   end
 

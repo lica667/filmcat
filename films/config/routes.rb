@@ -2,17 +2,21 @@ Films::Application.routes.draw do
   get "comment/create"
   get "video/new"
   get "video/create"
-  get 'video/watched' => 'video#watched'
+    
   devise_for :users
-  get "home/index"
+  
   root to: "home#index"
+
   resources :comment # oni dolzhni byt v mozhestvennom chisle
+
   resources :video do
     member do
       post :like
       post :favorite
+      patch :favorite
       get :genre
       get :sort
+      get :watched
     end
   end
 

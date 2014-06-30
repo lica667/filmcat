@@ -1,14 +1,8 @@
-<h1>Home#index</h1>
-<div class="col-md-12">
 Sort:
-
-  <div class="btn-group">
-      <button class="btn btn-default"> Name</button>
-      <button class="btn btn-default"> Rating</button>
-      <button class="btn btn-default"> Release Date</button>      
-       
-  </div>
-  <%= link_to('Name', sort_video_path(:name))  %> 
+<div class="btn-group">     
+  <%= link_to 'Name', sort_video_path(:name), class: "btn btn-default"  %> 
+  <%= link_to 'Rating', sort_video_path(:rating), class: "btn btn-default"  %>
+  <%= link_to 'Release Date', sort_video_path(:release_date), class: "btn btn-default"  %> 
 </div>
 
 

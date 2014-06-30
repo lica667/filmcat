@@ -37,13 +37,7 @@ class VideoController < ApplicationController
   def update
     @video = Video.find(params[:id])
     @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date]))
-    #params.require(:genre).permit(:id).each do |genre|
-    #  @genre_video = GenreVideo.new()
-    #  @genre_video[:genre_id] = genre
-    #  @genre_video[:video_id] = @video.id
-    #  @genre_video.save
-    #end
-    params.require(:genre).permit(:id).each do |id|
+    params.require(:genre).permit([:id]).each do |id|
       GenreVideo.create(:genre_id => id, :video_id => @video.id)
     end
     redirect_to video_path(@video)
@@ -63,8 +57,14 @@ class VideoController < ApplicationController
   end
 
   def favorite
-    @film_join = VideoJoin.create(params.require(:video_join).permit([:user_id, :video_id]))
-    redirect_to video_path(@film_join.video_id)
+    @id = params.require(:video_join).permit([:video_id])
+    @video_join = VideoJoin.where(user_id: current_user.id, video_id: params[:id]).first    
+    if @video_join.nil?      
+      @film_join = VideoJoin.create(params.require(:video_join).permit([:user_id, :video_id]))
+    else      
+      @video_join.destroy
+    end
+    redirect_to video_path(@id)
   end
 
   def watched
