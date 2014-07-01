@@ -62,6 +62,9 @@
                 <li>
                   <%= link_to('Watched Films', watched_video_path(current_user)) %>
                 </li>
+                <li>
+                  <%= link_to('Premiere Films', premiere_list_video_path(current_user)) %>
+                </li>
               <% else %>
                 <li>
                   <%= link_to('Register', new_user_registration_path)  %>

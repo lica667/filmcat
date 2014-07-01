@@ -17,14 +17,21 @@ class VideoController < ApplicationController
 
   def show
   	@film = Video.find(params[:id])
+
   	@comment = Comment.new()
+
     @video_genre = @film.genres
+
     @video_join = VideoJoin.where(user_id: current_user.id, video_id: params[:id]).first    
     if @video_join.nil?
       @video_join = VideoJoin.new
     else
       @video_join.favorite = true
     end
+
+    @premiere_video = PremiereVideo.where(user_id: current_user.id, video_id: params[:id]).first    
+    @premiere_video = PremiereVideo.new if @premiere_video.nil?
+
     @genres = Genre.all.order(:genre)
   end
 
@@ -36,8 +43,10 @@ class VideoController < ApplicationController
 
   def update
     @video = Video.find(params[:id])
-    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date]))
-    params.require(:genre).permit([:id]).each do |id|
+    
+    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date, :genre]))
+    
+    params.require(:genre).permit(:id).each do |id|
       GenreVideo.create(:genre_id => id, :video_id => @video.id)
     end
     redirect_to video_path(@video)
@@ -84,6 +93,23 @@ class VideoController < ApplicationController
     @videos = Video.all.order(:rating).reverse if params[:id] == 'rating'
     @videos = Video.all.order(:release_date).reverse if params[:id] == 'release_date'
 
+    @genres = Genre.all.order(:genre)
+  end
+
+  def premiere
+    @premiere_video = PremiereVideo.where(user_id: current_user.id, video_id: params[:id]).first
+    if @premiere_video.nil?
+      PremiereVideo.create(params.require(:premiere_video).permit([:user_id, :video_id]))
+    else
+      @premiere_video.destroy
+    end
+    redirect_to video_path(params[:id])
+  end
+
+  def premiere_list
+    @ids = PremiereVideo.where(user_id: current_user.id)
+    @videos = Array.new
+    @ids.each{|id| @videos.push(Video.find(id.video_id))}
     @genres = Genre.all.order(:genre)
   end
 

@@ -17,6 +17,9 @@ Films::Application.routes.draw do
       get :genre
       get :sort
       get :watched
+      post :premiere
+      patch :premiere
+      get :premiere_list
     end
   end
 
