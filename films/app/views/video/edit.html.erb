@@ -16,7 +16,9 @@
     Release date<br/> <%= f.text_field :release_date, placeholder: "release_date", class: "form-control" %><br/> 
   </div>
   <div class="form-group">
-    Genre<br/> <%= collection_select(:genre, :id, @genres, :id, :genre, {}, {:multiple => true}) %>
+  <%= f.fields_for :genres do |gf| %>
+    Genre<br/> <%= gf.collection_select :id, :genre, Genre.all, :id, :genre, {}, {:multiple => true} %>
   </div>
+  <% end %>
   <button type="submit" class="btn btn-default">Submit</button>
 <% end %>

@@ -6,4 +6,7 @@ class Video < ActiveRecord::Base
 	
 	has_many :genre_videos
 	has_many :genres, through: :genre_videos
+
+	default_scope { order(:name) }
+	accepts_nested_attributes_for :genres, :allow_destroy => true
 end

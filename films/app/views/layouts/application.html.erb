@@ -54,7 +54,7 @@
                 <li>
                   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
                 </li>
-                <% if current_user.email == "admin@asd.com" %>
+                <% if current_user.admin? %>
                 <li>
                   <%= link_to('New video', new_video_path) %>
                 </li>
@@ -88,7 +88,7 @@
               <ul class="nav nav-list">
                 <li class="nav-header">Sidebar</li>
                 <% @genres.each do |genre| %>
-                <li><%= link_to genre.genre, genre_video_path(genre) %></li>
+                <li><%= link_to genre.genre, genre_path(genre.id) %></li>
                 <% end %>
               </ul>
             </div><!--/.well -->

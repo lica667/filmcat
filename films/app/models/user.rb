@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
   has_many :video_joins
   has_many :videos, through: :video_joins
   has_many :premiere_videos
+
+  def admin?
+  	email == "admin@asd.com"
+  end
 end

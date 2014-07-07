@@ -1,10 +1,8 @@
-<div class="col-md-12">
 Sort:
-  <div class="btn-group">
-      <button class="btn btn-default"> Name</button>
-      <button class="btn btn-default"> Rating</button>
-      <button class="btn btn-default"> Release Date</button>      
-  </div>
+<div class="btn-group">     
+  <%= link_to 'Name', "#{root_path}?sort=name", class: "btn btn-default"  %> 
+  <%= link_to 'Rating', "#{root_path}?sort=rating", class: "btn btn-default"  %>
+  <%= link_to 'Release Date', "#{root_path}?sort=release_date", class: "btn btn-default"  %> 
 </div>
 
 

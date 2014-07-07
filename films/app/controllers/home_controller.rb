@@ -1,23 +1,14 @@
 class HomeController < ApplicationController
-  def index  
-  	 @videos = Video.all.order(:name)
-     #@videos = Video.all.order(:rating).reverse if params[:id] == 'rating'
-     @genres = Genre.all.order(:genre)
-  end
-
-  def name
-  	@videos = Video.all.order(:name)
-  	redirect_to root_path
-  end
-
-  def rating
-  	@videos = Video.all.order(:rating)
-  	redirect_to root_path
-  end
-
-  def release_date
-  	@videos = Video.all.order(:release_date)
-  	redirect_to root_path
+  def index  	
+    if params[:sort] == 'name'
+      @videos = Video.all.order(:name)
+    elsif params[:sort] == 'rating'
+      @videos = Video.all.unscoped.order(:rating).reverse
+    elsif params[:sort] == 'release_date'
+      @videos = Video.all.order(:release_date).reverse       
+    else
+      @videos = Video.all
+    end
   end
 end
 

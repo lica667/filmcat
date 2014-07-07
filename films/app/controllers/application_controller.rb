@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :authenticate_user!
-  before_action :premiere_check!
+  before_action :set_genres
+  #before_action :premiere_check!
 
   def premiere_check
   	@videos = Video.where(release_date: Date.today)
@@ -12,6 +13,11 @@ class ApplicationController < ActionController::Base
   		@email = User.find(PremiereVideo.last.user_id).email
       #send email
   	end
+  end
+  protected
+
+  def set_genres
+    @genres = Genre.all
   end
   
 end

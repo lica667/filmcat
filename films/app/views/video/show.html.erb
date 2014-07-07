@@ -18,12 +18,12 @@
 			<%= f.hidden_field :video_id, value: @film.id %>
 			<%= f.hidden_field :user_id, value: current_user.id %>
 			<%= f.hidden_field :favorite, value: 'true' %>
-			<%= image_submit_tag('https://ps.vk.me/c539610/u38026077/docs/d4f5b56f69d7/watched.png?extra=R38_OpnUeSiQ5p5vgfR1eWJgcyApQKMv9KjzUir_StSASKEK_mwsImwMEAhztU24aE9aaxOK9eh7KCl6cx_nBL16RX_l8ZY', height: '40', width: '100', :alt => 'Like') %>
+			<%= image_submit_tag('watched.png', height: '40', width: '100', :alt => 'Like') %>
 		<% else %>
 			<%= f.hidden_field :video_id, value: @film.id %>
 			<%= f.hidden_field :user_id, value: current_user.id %>
 			<%= f.hidden_field :favorite, value: 'false' %>
-			<%= image_submit_tag('https://ps.vk.me/c539120/u38026077/docs/e3370e3ce10a/watched-2.png?extra=IzZSsFHu1k7xprz0wjAE1SfFD-Cju6L1q7_FJHSC_2idDyqNPRS38ccxczn7Y7NZE4rpIJ1z-1OrGHhUVRSN5lfvT4osSUk', height: '40', width: '100', :alt => 'Like') %>
+			<%= image_submit_tag('watched-2.png', height: '40', width: '100', :alt => 'Like') %>
 		<% end %>
 	<% end %>
 <% else %>
@@ -31,11 +31,11 @@
 		<% if @premiere_video.user_id == current_user.id %>
 			<%= f.hidden_field :video_id, value: @film.id %>
 			<%= f.hidden_field :user_id, value: current_user.id %>
-			<%= image_submit_tag('https://ps.vk.me/c539315/u38026077/docs/9f2191651fb2/Unsubscribe.png?extra=rYYWYeKEz41UD2gx-PtxnpcTfRTd3yiEYWB7u_dyWfaLjGNx65reUZSgFhIB3WT0PwWu_6LvUcRGj1wlE71PebTLWrHgq0U', height: '40', width: '100', :alt => 'Premiere') %>	
+			<%= image_submit_tag('Unsubscribe.png', height: '40', width: '100', :alt => 'Premiere') %>	
 		<% else %>
 			<%= f.hidden_field :video_id, value: @film.id %>
 			<%= f.hidden_field :user_id, value: current_user.id %>
-			<%= image_submit_tag('https://ps.vk.me/c539315/u38026077/docs/7161c63f2101/Subscribe.png?extra=iU3rFcySvcN6dECB4JHYTfXwJMS9zFQLUvz0x-BXexyeIB7HmB7vPIdoQ__lpahJMv_WbkV369MHTzgRYcK4RFswZrIlQhM', height: '40', width: '100', :alt => 'Premiere') %>
+			<%= image_submit_tag('Subscribe.png', height: '40', width: '100', :alt => 'Premiere') %>
 		<% end %>
 	<% end %>
 <% end %>

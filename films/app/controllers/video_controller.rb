@@ -1,7 +1,6 @@
 class VideoController < ApplicationController
   def new
   	@video = Video.new()
-    @genres = Genre.all.order(:genre)
     @genre_video = GenreVideo.new
   end
 
@@ -32,7 +31,6 @@ class VideoController < ApplicationController
     @premiere_video = PremiereVideo.where(user_id: current_user.id, video_id: params[:id]).first    
     @premiere_video = PremiereVideo.new if @premiere_video.nil?
 
-    @genres = Genre.all.order(:genre)
   end
 
   def destroy
@@ -45,16 +43,15 @@ class VideoController < ApplicationController
     @video = Video.find(params[:id])
     
     @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date, :genre]))
-    
-    params.require(:genre).permit(:id).each do |id|
-      GenreVideo.create(:genre_id => id, :video_id => @video.id)
-    end
+    #@video.genres.update_attributes(params.require(:genre).permit(:id))
+    #params.require(:genre).permit(:id).each do |id|
+    #  @video.genres.create(:genre_id => id, :video_id => @video.id)
+    #end
     redirect_to video_path(@video)
   end
 
   def edit
     @video = Video.find(params[:id])
-    @genres = Genre.all.order(:genre)
     @genre_video = GenreVideo.new
   end
 
@@ -78,22 +75,11 @@ class VideoController < ApplicationController
 
   def watched
     @videos = current_user.videos
-    @genres = Genre.all.order(:genre)
   end
 
   def genre
     @genre = Genre.find(params[:id])
     @videos = @genre.videos.all
-    @genres = Genre.all.order(:genre)
-  end
-
-  def sort
-
-    @videos = Video.all.order(:name) if params[:id] == 'name'
-    @videos = Video.all.order(:rating).reverse if params[:id] == 'rating'
-    @videos = Video.all.order(:release_date).reverse if params[:id] == 'release_date'
-
-    @genres = Genre.all.order(:genre)
   end
 
   def premiere
@@ -110,8 +96,6 @@ class VideoController < ApplicationController
     @ids = PremiereVideo.where(user_id: current_user.id)
     @videos = Array.new
     @ids.each{|id| @videos.push(Video.find(id.video_id))}
-    @genres = Genre.all.order(:genre)
   end
-
-
+  
 end

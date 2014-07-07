@@ -1,4 +1,5 @@
 Films::Application.routes.draw do
+  get "genres/show"
   get "comment/create"
   get "video/new"
   get "video/create"
@@ -8,6 +9,8 @@ Films::Application.routes.draw do
   root to: "home#index"
 
   resources :comment # oni dolzhni byt v mozhestvennom chisle
+
+  resources :genres
 
   resources :video do
     member do
