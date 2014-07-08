@@ -1,4 +1,4 @@
-class VideoController < ApplicationController
+class VideosController < ApplicationController
   def new
   	@video = Video.new()
     @genre_video = GenreVideo.new
@@ -42,7 +42,7 @@ class VideoController < ApplicationController
   def update
     @video = Video.find(params[:id])
     
-    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date, :genre]))
+    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date, genres_attributes:[:id,:genre]]))
     #@video.genres.update_attributes(params.require(:genre).permit(:id))
     #params.require(:genre).permit(:id).each do |id|
     #  @video.genres.create(:genre_id => id, :video_id => @video.id)
@@ -52,7 +52,7 @@ class VideoController < ApplicationController
 
   def edit
     @video = Video.find(params[:id])
-    @genre_video = GenreVideo.new
+    @video.genres.build
   end
 
   def like

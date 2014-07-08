@@ -5,15 +5,8 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :set_genres
-  #before_action :premiere_check!
-
-  def premiere_check
-  	@videos = Video.where(release_date: Date.today)
-  	@videos.each do |video|
-  		@email = User.find(PremiereVideo.last.user_id).email
-      #send email
-  	end
-  end
+  
+  
   protected
 
   def set_genres

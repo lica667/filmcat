@@ -7,7 +7,7 @@
 	Rating <%= @film.rating %><br/>
 
 	<%= link_to 'All Films', root_path %>
-	<% if current_user.email == "admin@asd.com" %>
+	<% if current_user.admin? %>
 		<%= link_to 'Delete', video_path, :method => :delete %>
 		<%= link_to 'Edit', edit_video_path %>
 	<% end %>

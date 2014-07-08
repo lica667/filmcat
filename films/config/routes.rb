@@ -12,7 +12,7 @@ Films::Application.routes.draw do
 
   resources :genres
 
-  resources :video do
+  resources :videos do
     member do
       post :like
       post :favorite

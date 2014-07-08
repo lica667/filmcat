@@ -10,6 +10,6 @@ class User < ActiveRecord::Base
   has_many :premiere_videos
 
   def admin?
-  	email == "admin@asd.com"
+  	id == 1
   end
 end
