@@ -7,7 +7,12 @@
 				<%= link_to genre.genre, genre_path(genre.id) %><% end %><br/>
 			Release: <%= @film.release_date.strftime("%Y-%b-%d") %><br/>			
 			</div>
-			<%= image_tag(@film.url_img,  height: '542', width: '360', alt: '') %><br/>
+			
+			<% if @film.image? %>
+				<%= image_tag @film.image.url %><br />
+			<% else %>
+				<%= image_tag(@film.url_img,  height: '542', width: '360', alt: '') %><br/>
+			<% end %>
 			<span style="color:#eeeeee">
 				<%= @film.description %><br/>
 				<% if current_user %>

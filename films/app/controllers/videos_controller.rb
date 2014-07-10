@@ -47,7 +47,7 @@ class VideosController < ApplicationController
   def update
     @video = Video.find(params[:id])
     
-    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date, :genres]))
+    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date, :image, :genres]))
     #@video.genres.update_attributes(params.require(:genre).permit(:id))
     #params.require(:genre).permit(:id).each do |id|
     #  @video.genres.create(:genre_id => id, :video_id => @video.id)
