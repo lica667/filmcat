@@ -1,7 +1,11 @@
 class VideosController < ApplicationController
   def new
-  	@video = Video.new()
-    @genre_video = GenreVideo.new
+    if current_user and current_user.admin?
+    	@video = Video.new()
+      @genre_video = GenreVideo.new
+    else
+      flash[:alert] = "You're not an admin! Get out!"
+    end
   end
 
   def create
@@ -21,15 +25,16 @@ class VideosController < ApplicationController
 
     @video_genre = @film.genres
 
-    @video_join = VideoJoin.where(user_id: current_user.id, video_id: params[:id]).first    
-    if @video_join.nil?
-      @video_join = VideoJoin.new
-    else
-      @video_join.favorite = true
+    if current_user
+      @video_join = VideoJoin.where(user_id: current_user.id, video_id: params[:id]).first    
+      if @video_join.nil?
+        @video_join = VideoJoin.new
+      else
+        @video_join.favorite = true
+      end
+      @premiere_video = PremiereVideo.where(user_id: current_user.id, video_id: params[:id]).first    
+      @premiere_video = PremiereVideo.new if @premiere_video.nil?
     end
-
-    @premiere_video = PremiereVideo.where(user_id: current_user.id, video_id: params[:id]).first    
-    @premiere_video = PremiereVideo.new if @premiere_video.nil?
 
   end
 
@@ -42,7 +47,7 @@ class VideosController < ApplicationController
   def update
     @video = Video.find(params[:id])
     
-    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date, genres_attributes:[:id,:genre]]))
+    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date, :genres]))
     #@video.genres.update_attributes(params.require(:genre).permit(:id))
     #params.require(:genre).permit(:id).each do |id|
     #  @video.genres.create(:genre_id => id, :video_id => @video.id)
@@ -51,8 +56,12 @@ class VideosController < ApplicationController
   end
 
   def edit
-    @video = Video.find(params[:id])
-    @video.genres.build
+    if current_user and current_user.admin?
+      @video = Video.find(params[:id])
+      @video.genres.build
+    else
+      flash[:alert] = "You're not an admin! Get out!"
+    end
   end
 
   def like

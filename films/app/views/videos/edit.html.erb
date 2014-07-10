@@ -1,23 +1,30 @@
-<h1>Video#EDIT</h1>
-<%= form_for @video, url: video_path do |f| %>
-  <div class="form-group">
-    Name <br/> <%= f.text_field :name, placeholder: "Name", class: "form-control" %><br/>    
-  </div>
-  <div class="form-group">
-    Description <br/> <%= f.text_area :description, placeholder: "Description", class: "form-control" %><br/> 
-  </div>
-  <div class="form-group">
-    Picture <br/> <%= f.text_field :url_img, placeholder: "url_image", class: "form-control" %><br/> 
-  </div>
-  <div class="form-group">
-    Video <br/> <%= f.text_field :url_video, placeholder: "url_video", class: "form-control" %><br/> 
-  </div>
-  <div class="form-group">
-    Release date<br/> <%= f.text_field :release_date, placeholder: "release_date", class: "form-control" %><br/> 
-  </div>
-  <div class="form-group">
-    Genre<br/> <%= f.collection_select :genres, Genre.all, :id, :genre, {}, {:multiple => true} %>
-  </div>
-
-  <button type="submit" class="btn btn-default">Submit</button>
-<% end %>
+<div class="container" style="margin-left: 100px; color:#eeeeee">
+  <div class="row">
+    <div class=" col-lg-4 ">
+      <% if current_user and current_user.admin? %> 
+        <h1>Video#EDIT</h1>
+        <%= form_for @video, url: video_path do |f| %>
+          <div class="form-group">
+            Name <br/> <%= f.text_field :name, placeholder: "Name", class: "form-control" %><br/>    
+          </div>
+          <div class="form-group">
+            Description <br/> <%= f.text_area :description, placeholder: "Description", class: "form-control" %><br/> 
+          </div>
+          <div class="form-group">
+            Picture <br/> <%= f.text_field :url_img, placeholder: "url_image", class: "form-control" %><br/> 
+          </div>
+          <div class="form-group">
+            Video <br/> <%= f.text_field :url_video, placeholder: "url_video", class: "form-control" %><br/> 
+          </div>
+          <div class="form-group">
+            Release date<br/> <%= f.text_field :release_date, placeholder: "release_date", class: "form-control" %><br/> 
+          </div>
+          <div class="form-group">
+            Genre<br/> <%= f.collection_select :genres, Genre.all, :id, :genre, {}, {:multiple => true} %>
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        <% end %>
+      <% end %>
+    </div> <!-- /col-lg-4 -->
+  </div> <!-- /row -->
+</div><!-- /container -->

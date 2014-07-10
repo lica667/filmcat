@@ -1,14 +1,39 @@
-Sort:
-<div class="btn-group">     
-  <%= link_to 'Name', "#{root_path}?sort=name", class: "btn btn-default"  %> 
-  <%= link_to 'Rating', "#{root_path}?sort=rating", class: "btn btn-default"  %>
-  <%= link_to 'Release Date', "#{root_path}?sort=release_date", class: "btn btn-default"  %> 
-</div>
-
-
-
-<% @videos.each do |video| %>
-	<div class="col-md-1">
-		<%= render video %>
+<%= render "genres/genre" %>
+<div id="page-content-wrapper" style="padding-left: 250px;"> 
+	<div class="content-header" >
+		<div class="btn-group">
+		<% if params[:sort] == 'name_asc' %>     
+  		<%= link_to 'Name↓', "#{root_path}?sort=name_desc", class: "btn btn-primary"  %>
+  	<% elsif params[:sort] == 'name_desc' %>     
+  		<%= link_to 'Name↑', "#{root_path}", class: "btn btn-primary"  %>
+  	<% else %>
+  		<%= link_to 'Name', "#{root_path}?sort=name_asc", class: "btn btn-default"  %>
+  	<% end %>
+  	<% if params[:sort] == 'rating_asc' %>     
+  		<%= link_to 'Rating↓', "#{root_path}?sort=rating_desc", class: "btn btn-primary"  %>
+  	<% elsif params[:sort] == 'rating_desc' %>     
+  		<%= link_to 'Rating↑', "#{root_path}", class: "btn btn-primary"  %>
+  	<% else %>
+  		<%= link_to 'Rating', "#{root_path}?sort=rating_asc", class: "btn btn-default"  %>
+  	<% end %>
+  	<% if params[:sort] == 'release_date_asc' %>     
+  		<%= link_to 'Release Date↓', "#{root_path}?sort=release_date_desc", class: "btn btn-primary"  %>
+  	<% elsif params[:sort] == 'release_date_desc' %>     
+  		<%= link_to 'Release Date↑', "#{root_path}", class: "btn btn-primary"  %>
+  	<% else %>
+  		<%= link_to 'Release Date', "#{root_path}?sort=release_date_asc", class: "btn btn-default"  %>
+  	<% end %>
+		</div>
 	</div>
-<% end %>
+
+
+	<div class="page-content inset">
+		<div class="row">
+			<% @videos.each do |video| %>
+			<div class="col-md-4">
+				<%= render video %>
+			</div>
+			<% end %>
+		</div>
+	</div>
+</div>  <!-- /page-content-wrapper -->

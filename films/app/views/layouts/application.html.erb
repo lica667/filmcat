@@ -36,7 +36,7 @@
 
     <%= javascript_include_tag "application" %>
   </head>
-  <body>
+  <body style="background-color:#333333">
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -78,27 +78,10 @@
         </div>
       </div>
     </div>
-
-    <div class="container-fluid" style="padding-top: 100px;">
-        <div class="row">
-          
-          <div class="span3" style="padding-top: 100px;">
-            <div class="well sidebar-nav">
-              <h3>Sidebar</h3>
-              <ul class="nav nav-list">
-                <li class="nav-header">Sidebar</li>
-                <% @genres.each do |genre| %>
-                <li><%= link_to genre.genre, genre_path(genre.id) %></li>
-                <% end %>
-              </ul>
-            </div><!--/.well -->
-          </div><!--/span-->
-          <div class="span9">
-            <%= bootstrap_flash %>
-            <%= yield %>
-          </div>
-        </div><!--/row-->
-
+  
+    <div class="container-fluid" style="padding-top: 40px;"> 
+        <%= bootstrap_flash %>
+        <%= yield %> 
       <footer>
         <p>&copy; Company 2014</p>
       </footer>

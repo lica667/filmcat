@@ -1,68 +1,80 @@
-<div class="col-xs-6 col-md-4">
-	<%= image_tag(@film.url_img,  height: '542', width: '360', alt: '') %><br/>
+<div class="container" style="margin-left: 100px;">
+	<div class="row">
+		<div class=" col-lg-6 ">
+			<h1 style="color:#eeeeee"><%= @film.name %><br/></h1>
+			<div class="lead" style="color:#eeeeee">
+				Genre: <% @video_genre.each do |genre| %>
+				<%= link_to genre.genre, genre_path(genre.id) %><% end %><br/>
+			Release: <%= @film.release_date.strftime("%Y-%b-%d") %><br/>			
+			</div>
+			<%= image_tag(@film.url_img,  height: '542', width: '360', alt: '') %><br/>
+			<span style="color:#eeeeee">
+				<%= @film.description %><br/>
+				<% if current_user %>
+					<%= form_for @film, :url => like_video_path(@film), :method => :post do |f|%>
+					<%= image_submit_tag('http://www.schneiderpr.com/blog/wp-content/uploads/2012/04/like-button.png', height: '20', width: '50', :alt => 'Like') %>
+					<% end %>
+				<% end %>
+				Rating <%= @film.rating %><br/>
+			</span>
 
-	<%= form_for @film, :url => like_video_path(@film), :method => :post do |f|%>
-	<%= image_submit_tag('http://www.schneiderpr.com/blog/wp-content/uploads/2012/04/like-button.png', height: '20', width: '50', :alt => 'Like') %>
-	<% end %>
-	Rating <%= @film.rating %><br/>
+			<%= link_to 'All Films', root_path %>
+		<% if current_user %>
+			<% if current_user.admin? %>
+				<%= link_to 'Delete', video_path, :method => :delete %>
+				<%= link_to 'Edit', edit_video_path %>
+			<% end %>
 
-	<%= link_to 'All Films', root_path %>
-	<% if current_user.admin? %>
-		<%= link_to 'Delete', video_path, :method => :delete %>
-		<%= link_to 'Edit', edit_video_path %>
-	<% end %>
-
-<% if @film.release_date < Time.now %>
-	<%= form_for @video_join, :url => favorite_video_path do |f| %>	
-		<% if @video_join.favorite == true %>
-			<%= f.hidden_field :video_id, value: @film.id %>
-			<%= f.hidden_field :user_id, value: current_user.id %>
-			<%= f.hidden_field :favorite, value: 'true' %>
-			<%= image_submit_tag('watched.png', height: '40', width: '100', :alt => 'Like') %>
-		<% else %>
-			<%= f.hidden_field :video_id, value: @film.id %>
-			<%= f.hidden_field :user_id, value: current_user.id %>
-			<%= f.hidden_field :favorite, value: 'false' %>
-			<%= image_submit_tag('watched-2.png', height: '40', width: '100', :alt => 'Like') %>
+		
+			<% if @film.release_date < Time.now %>
+				<%= form_for @video_join, :url => favorite_video_path do |f| %>	
+					<% if @video_join.favorite == true %>
+						<%= f.hidden_field :video_id, value: @film.id %>
+						<%= f.hidden_field :user_id, value: current_user.id %>
+						<%= f.hidden_field :favorite, value: 'true' %>
+						<%= image_submit_tag('watched.png', height: '40', width: '100', :alt => 'Like') %>
+					<% else %>
+						<%= f.hidden_field :video_id, value: @film.id %>
+						<%= f.hidden_field :user_id, value: current_user.id %>
+						<%= f.hidden_field :favorite, value: 'false' %>
+						<%= image_submit_tag('watched-2.png', height: '40', width: '100', :alt => 'Like') %>
+					<% end %>
+				<% end %>
+			<% else %>
+				<%= form_for @premiere_video, :url => premiere_video_path do |f| %>
+					<% if @premiere_video.user_id == current_user.id %>
+						<%= f.hidden_field :video_id, value: @film.id %>
+						<%= f.hidden_field :user_id, value: current_user.id %>
+						<%= image_submit_tag('Unsubscribe.png', height: '40', width: '100', :alt => 'Premiere') %>	
+					<% else %>
+						<%= f.hidden_field :video_id, value: @film.id %>
+						<%= f.hidden_field :user_id, value: current_user.id %>
+						<%= image_submit_tag('Subscribe.png', height: '40', width: '100', :alt => 'Premiere') %>
+					<% end %>
+				<% end %>
+			<% end %>
 		<% end %>
-	<% end %>
-<% else %>
-	<%= form_for @premiere_video, :url => premiere_video_path do |f| %>
-		<% if @premiere_video.user_id == current_user.id %>
-			<%= f.hidden_field :video_id, value: @film.id %>
-			<%= f.hidden_field :user_id, value: current_user.id %>
-			<%= image_submit_tag('Unsubscribe.png', height: '40', width: '100', :alt => 'Premiere') %>	
-		<% else %>
-			<%= f.hidden_field :video_id, value: @film.id %>
-			<%= f.hidden_field :user_id, value: current_user.id %>
-			<%= image_submit_tag('Subscribe.png', height: '40', width: '100', :alt => 'Premiere') %>
-		<% end %>
-	<% end %>
-<% end %>
+		</div>
 
+		<div class="col-xs-12 col-md-8">
+	  	<iframe width="560" height="315" src="<%= @film.url_video %>" frameborder="0" allowfullscreen></iframe>
+	  	<div class="well">
+				<h4>Comments</h4>
+				<% @film.comments.each do |comment| %>
+				<h4><%= comment.text %></h4>
+				<%= comment.created_at.strftime("%Y-%b-%d") %>
+				<%= comment.user.email %><br/>
+				<% end %>
 
-</div>
+				<% if current_user %>
+					<%= form_for @comment, :url => comment_index_path do |f| %>
+					<%= f.text_area :text, class: "form-control", placeholder: 'Comment' %><br/>
+					<%= f.hidden_field :video_id, value: @film.id %>
+					<%= f.button :submit, class: 'btn btn-default'%>
+					<% end %>
+				<% end %>
+			</div><!-- /well -->
+		</div>
 
-<div class="col-xs-12 col-md-8">
-	Name: <%= @film.name %><br/>
-	Genre: <% @video_genre.each do |genre| %>
-		<%= genre.genre %><% end %><br/>
-	Release: <%= @film.release_date.strftime("%Y-%b-%d") %><br/>
-	<%= @film.description %><br/>
-	
-  <iframe width="560" height="315" src="<%= @film.url_video %>" frameborder="0" allowfullscreen></iframe>
-
-	<p>Comments</p>
-	<% @film.comments.each do |comment| %>
-	<%= comment.text %>
-	<%= comment.created_at %>
-	<%= comment.user.email %><br/>
-	<% end %>
-
-	<%= form_for @comment, :url => comment_index_path do |f| %>
-	<%= f.text_area :text, class: "form-control", placeholder: 'Comment' %><br/>
-	<%= f.hidden_field :video_id, value: @film.id %>
-	<%= f.button :submit %>
-	<% end %>
-</div>
-
+	</div> <!-- /row -->
+</div><!-- /container -->

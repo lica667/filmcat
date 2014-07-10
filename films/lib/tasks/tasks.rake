@@ -4,12 +4,13 @@ task :check => :environment do
 
   @videos = Video.where(release_date: Date.today)
   @videos.each do |video|
-  	@user_ids = PremiereVideo.where(video_id: video.id)
-  	@user_ids.each do |uid|
-  		@user = User.find(uid)
+  	@premieres = PremiereVideo.where(video_id: video.id)
+  	@premieres.each do |premiere|
+  		@user = User.find(premiere.user_id)
   		puts "sending email..."
   		UserMailer.email(@user).deliver
-  		#PremiereVideo.where(user_id: uid , video_id: video.id).destroy
+      puts "sent for #{@user.email}"
+  		premiere.destroy
   	end  		
   end
 end
