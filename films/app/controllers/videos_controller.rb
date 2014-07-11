@@ -9,7 +9,7 @@ class VideosController < ApplicationController
   end
 
   def create
-  	@video = Video.new(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date]))
+  	@video = Video.new(video_params)
     @video.rating = 0
     params.require(:genre).permit(:id).each do |genre|
       GenreVideo.create(:genre_id => genre, :video_id => @video.id)
@@ -47,7 +47,7 @@ class VideosController < ApplicationController
   def update
     @video = Video.find(params[:id])
     
-    @video.update_attributes(params.require(:video).permit([:name, :description, :url_img, :url_video, :release_date, :image, :genres]))
+    @video.update_attributes(video_params)
     #@video.genres.update_attributes(params.require(:genre).permit(:id))
     #params.require(:genre).permit(:id).each do |id|
     #  @video.genres.create(:genre_id => id, :video_id => @video.id)
@@ -66,7 +66,15 @@ class VideosController < ApplicationController
 
   def like
     @film = Video.find(params[:id])
-    @film.rating += 1
+    @like = Like.where(user_id: current_user.id, video_id: @film.id).first
+    if @like.nil?
+      @film.rating += 1
+      Like.create(user_id: current_user.id, video_id: @film.id)
+      
+    else
+      flash[:alert] = 'You can rate one time'
+      
+    end
     @film.save
     redirect_to video_path(@film.id)
   end
@@ -106,5 +114,12 @@ class VideosController < ApplicationController
     @videos = Array.new
     @ids.each{|id| @videos.push(Video.find(id.video_id))}
   end
+
+  private 
+
   
+
+  def video_params
+    params.require(:video).permit(:name, :description, :url_img, :url_video, :release_date, :image, :genre_ids => [])
+  end
 end

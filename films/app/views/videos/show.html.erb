@@ -66,7 +66,7 @@
 	  	<div class="well">
 				<h4>Comments</h4>
 				<% @film.comments.each do |comment| %>
-				<h4><%= comment.text %></h4>
+				<h4><%= simple_format comment.text %></h4>
 				<%= comment.created_at.strftime("%Y-%b-%d") %>
 				<%= comment.user.email %><br/>
 				<% end %>

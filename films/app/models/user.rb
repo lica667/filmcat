@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :video_joins
   has_many :videos, through: :video_joins
   has_many :premiere_videos
+  has_many :likes
 
   def admin?
   	id == 1
