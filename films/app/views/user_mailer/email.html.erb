@@ -4,14 +4,14 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to Films, <%= @user.email %></h1>
+    <h1><%= t('Hello',user: @user.email %></h1>
     <p>
-      Your film's added
+      <%= t :added %>
       <br />
     </p>
     <p>
-      To see the film, just follow this link: <%= @url %>.
+      <%= t :follow_the_link %> <%= @url %>.
     </p>
-    <p>Thanks for joining and have a great day!</p>
+    <p><%= t :thnx %></p>
   </body>
 </html>

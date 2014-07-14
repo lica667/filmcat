@@ -3,9 +3,9 @@
 		<div class=" col-lg-6 ">
 			<h1 style="color:#eeeeee"><%= @film.name %><br/></h1>
 			<div class="lead" style="color:#eeeeee">
-				Genre: <% @video_genre.each do |genre| %>
+				<%= t 'Genre' %>: <% @film.genres.each do |genre| %>
 				<%= link_to genre.genre, genre_path(genre.id) %><% end %><br/>
-			Release: <%= @film.release_date.strftime("%Y-%b-%d") %><br/>			
+			<%= t 'Release' %>: <%= @film.release_date.strftime("%Y-%b-%d") %><br/>			
 			</div>
 			
 			<% if @film.image? %>
@@ -20,14 +20,14 @@
 					<%= image_submit_tag('http://www.schneiderpr.com/blog/wp-content/uploads/2012/04/like-button.png', height: '20', width: '50', :alt => 'Like') %>
 					<% end %>
 				<% end %>
-				Rating <%= @film.rating %><br/>
+				<%= t :Rating, param: '' %> <%= @film.rating %><br/>
 			</span>
 
-			<%= link_to 'All Films', root_path %>
+			<%= link_to t('All_Films'), root_path %>
 		<% if current_user %>
 			<% if current_user.admin? %>
-				<%= link_to 'Delete', video_path, :method => :delete %>
-				<%= link_to 'Edit', edit_video_path %>
+				<%= link_to t('Delete'), video_path, :method => :delete %>
+				<%= link_to t('Edit'), edit_video_path %>
 			<% end %>
 
 		
@@ -64,7 +64,7 @@
 		<div class="col-xs-12 col-md-8">
 	  	<iframe width="560" height="315" src="<%= @film.url_video %>" frameborder="0" allowfullscreen></iframe>
 	  	<div class="well">
-				<h4>Comments</h4>
+				<h4><%= t 'Comments' %></h4>
 				<% @film.comments.each do |comment| %>
 				<h4><%= simple_format comment.text %></h4>
 				<%= comment.created_at.strftime("%Y-%b-%d") %>

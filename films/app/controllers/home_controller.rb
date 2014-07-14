@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  def index  	
+  def index  
     if params[:sort] == 'name_asc'
       @videos = Video.all.order(:name)
     elsif params[:sort] == 'rating_asc'

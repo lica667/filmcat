@@ -1,6 +1,6 @@
 <div id="sidebar-wrapper">
   <div class="sidebar-nav">
-    <h3>Genres</h3>
+    <h3><%= t :Genres %></h3>
       <ul class="nav nav-list">
         <% @genres.each do |genre| %>
         <li><%= link_to genre.genre, genre_path(genre.id) %></li>

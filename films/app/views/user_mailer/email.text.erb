@@ -1,6 +1,8 @@
-Welcome to Films, <%= @user.email %>
+<%= t('Hello',user: @user.email %>
 ===============================================
 
-Your film's added
+<%= t :added %>
 
-To see the film, just follow this link: <%= @url %>.
+<%= t :follow_the_link %> <%= @url %>.
+
+<%= t :thnx %>

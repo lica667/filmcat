@@ -46,33 +46,38 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <%= link_to('Films', root_path, class: "brand")%>
+          <%= link_to t(:app), root_path, class: "brand"%>
+
           <div class="container nav-collapse">
             <ul class="nav">
               <% if current_user %>
-                <li><a>Hello, <%= current_user.email %></a></li>
+                <li><a> <%= t :Hello, user: current_user.email %></a></li>
                 <li>
-                  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+                  <%= link_to t('Logout'), destroy_user_session_path, :method => :delete %>
                 </li>
                 <% if current_user.admin? %>
                 <li>
-                  <%= link_to('New video', new_video_path) %>
+                  <%= link_to t('New_video'), new_video_path %>
                 </li>
                 <% end %>
                 <li>
-                  <%= link_to('Watched Films', watched_video_path(current_user)) %>
+                  <%= link_to t('Watched_Films'), watched_video_path(current_user) %>
                 </li>
                 <li>
-                  <%= link_to('Premiere Films', premiere_list_video_path(current_user)) %>
+                  <%= link_to t('Premiere_Films'), premiere_list_video_path(current_user) %>
                 </li>
               <% else %>
                 <li>
-                  <%= link_to('Register', new_user_registration_path)  %>
+                  <%= link_to t('Register'), new_user_registration_path  %>
                 </li>
                 <li>
-                  <%= link_to('Sign in', new_user_session_path)  %>
+                  <%= link_to t('Sign_in'), new_user_session_path  %>
                 </li>
-              <% end %>
+              <% end %>            
+            </ul>
+            <ul class="nav navbar-right">
+              <li><%= link_to "en", "#{locales_path}?locale=en" %></li>
+              <li><%= link_to "ru", "#{locales_path}?locale=ru" %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -82,10 +87,6 @@
     <div class="container-fluid" style="padding-top: 40px;"> 
         <%= bootstrap_flash %>
         <%= yield %> 
-      <footer>
-        <p>&copy; Company 2014</p>
-      </footer>
-
     </div> <!-- /container -->
 
   </body>

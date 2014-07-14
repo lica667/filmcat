@@ -5,7 +5,11 @@ class ApplicationController < ActionController::Base
 
   #before_action :authenticate_user!
   before_action :set_genres
-  
+
+  before_filter :set_locale  
+  def set_locale
+  	I18n.locale = (current_user.locale if current_user) || session[:locale] || I18n.default_locale
+	end    
   
   protected
 

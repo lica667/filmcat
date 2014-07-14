@@ -2,7 +2,7 @@ class VideosController < ApplicationController
   def new
     if current_user and current_user.admin?
     	@video = Video.new()
-      @genre_video = GenreVideo.new
+      @video.genres.build
     else
       flash[:alert] = "You're not an admin! Get out!"
     end
@@ -11,48 +11,8 @@ class VideosController < ApplicationController
   def create
   	@video = Video.new(video_params)
     @video.rating = 0
-    params.require(:genre).permit(:id).each do |genre|
-      GenreVideo.create(:genre_id => genre, :video_id => @video.id)
-    end
   	@video.save
   	redirect_to root_path
-  end
-
-  def show
-  	@film = Video.find(params[:id])
-
-  	@comment = Comment.new()
-
-    @video_genre = @film.genres
-
-    if current_user
-      @video_join = VideoJoin.where(user_id: current_user.id, video_id: params[:id]).first    
-      if @video_join.nil?
-        @video_join = VideoJoin.new
-      else
-        @video_join.favorite = true
-      end
-      @premiere_video = PremiereVideo.where(user_id: current_user.id, video_id: params[:id]).first    
-      @premiere_video = PremiereVideo.new if @premiere_video.nil?
-    end
-
-  end
-
-  def destroy
-    @video = Video.find(params[:id])
-    @video.destroy
-    redirect_to root_path
-  end
-
-  def update
-    @video = Video.find(params[:id])
-    
-    @video.update_attributes(video_params)
-    #@video.genres.update_attributes(params.require(:genre).permit(:id))
-    #params.require(:genre).permit(:id).each do |id|
-    #  @video.genres.create(:genre_id => id, :video_id => @video.id)
-    #end
-    redirect_to video_path(@video)
   end
 
   def edit
@@ -64,16 +24,42 @@ class VideosController < ApplicationController
     end
   end
 
+  def update
+    @video = Video.find(params[:id])    
+    @video.update_attributes(video_params)
+    redirect_to video_path(@video)
+  end
+
+  def destroy
+    @video = Video.find(params[:id])
+    @video.destroy
+    redirect_to root_path
+  end
+
+  def show
+  	@film = Video.find(params[:id])
+  	@comment = Comment.new()
+
+    if current_user
+      @video_join = VideoJoin.where(user_id: current_user.id, video_id: params[:id]).first    
+      if @video_join.nil?
+        @video_join = VideoJoin.new
+      else
+        @video_join.favorite = true
+      end
+      @premiere_video = PremiereVideo.where(user_id: current_user.id, video_id: params[:id]).first    
+      @premiere_video = PremiereVideo.new if @premiere_video.nil?
+    end
+  end
+
   def like
     @film = Video.find(params[:id])
     @like = Like.where(user_id: current_user.id, video_id: @film.id).first
     if @like.nil?
       @film.rating += 1
-      Like.create(user_id: current_user.id, video_id: @film.id)
-      
+      Like.create(user_id: current_user.id, video_id: @film.id)      
     else
-      flash[:alert] = 'You can rate one time'
-      
+      flash[:alert] = 'You can rate one time'      
     end
     @film.save
     redirect_to video_path(@film.id)
@@ -91,12 +77,8 @@ class VideosController < ApplicationController
   end
 
   def watched
-    @videos = current_user.videos
-  end
 
-  def genre
-    @genre = Genre.find(params[:id])
-    @videos = @genre.videos.all
+    @videos = current_user.videos
   end
 
   def premiere
@@ -115,9 +97,7 @@ class VideosController < ApplicationController
     @ids.each{|id| @videos.push(Video.find(id.video_id))}
   end
 
-  private 
-
-  
+  private   
 
   def video_params
     params.require(:video).permit(:name, :description, :url_img, :url_video, :release_date, :image, :genre_ids => [])

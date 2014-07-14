@@ -1,4 +1,4 @@
-<h1>Premiere</h1>
+<h1><%= t 'Premiere' %></h1>
 <% @videos.each do |video| %>
 <div class="span4">
 <%= link_to video.name, video_path(video) %><br/>
