@@ -33,8 +33,8 @@ Films::Application.configure do
     address:              'smtp.gmail.com',
     port:                 587,
     domain:               'localhost:3000',
-    user_name:            'lica667@gmail.com',
-    password:             '351963007687126',
+    user_name:            'films.filmsonline@gmail.com',
+    password:             'onlinefilms',
     authentication:       'plain',
     enable_starttls_auto: true  }
 end
